@@ -16,7 +16,7 @@ const errorHandler = (err, req, res, next) => {
         stackTrace: err.stack,
       });
       break;
-    case constants.UNAUTHOPRIZED:
+    case constants.UNAUTHOURIZED:
       res.json({
         title: "UNAUTHORIZED",
         message: err.message,

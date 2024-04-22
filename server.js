@@ -1,7 +1,10 @@
 const express = require("express");
+const mongoose = require('mongoose')
 const errorHandler = require("./middleWare/errorHandler");
 const dotenv = require("dotenv").config();
 const app = express();
+const db = require('./db');
+// const url = 'mongodb://localhost:27017/blogsDB'
 const port = process.env.port || 5000;
 
 app.use(express.json())

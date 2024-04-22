@@ -1,23 +1,46 @@
+const BlogModel = require('../Model/blog');
+
 const asyncHandler = require("express-async-handler");
-//@desc get all products
-//@route GET /api/products
-//@access public
-const getProducts = asyncHandler((req, res) => {
-  res.status(200).json({ message: "get all products" });
-});
 
 //@desc Create  products
 //@route post /api/products
 //@access public
-const createProduct = asyncHandler((req, res) => {
+async function createProduct(req, res) {
   console.log("create product body", req.body);
-  const { name, age, phone } = req.body;
-  if (!name || !age || !phone) {
-    res.status(400);
-    throw new Error("All Fields Are manditory");
+  // const { name, age, phone } = req.body;
+  // if (!name || !age || !phone) {
+  //   res.status(400);
+  //   throw new Error("All Fields Are manditory");
+  // }
+  // res.status(200).json({ message: "create a products" });
+
+  const { name, age } = req.body;
+
+  try {
+    const blogData = new BlogModel({ name, age });
+    await blogData.save();
+    res.send(blogData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
   }
-  res.status(200).json({ message: "create a products" });
-});
+};
+
+//@desc get all products
+//@route GET /api/products
+//@access public
+async function getProducts(req, res) {
+  try {
+    const users = await BlogModel.find({});
+    console.log('users', users)
+    res.send(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
+
 
 //@desc Get individual  products
 //@route GET /api/products/id

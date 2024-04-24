@@ -6,9 +6,10 @@ const app = express();
 const db = require('./db');
 // const url = 'mongodb://localhost:27017/blogsDB'
 const port = process.env.port || 5000;
+const cors = require('express-cors')
 
 app.use(express.json())
-
+app.use(cors())
 app.use("/api/products", require("./routes/productsRoute"));
 
 app.use("/api/user", require("./routes/userRoute"));

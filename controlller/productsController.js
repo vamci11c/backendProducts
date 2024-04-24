@@ -7,13 +7,6 @@ const asyncHandler = require("express-async-handler");
 //@access public
 async function createProduct(req, res) {
   console.log("create product body", req.body);
-  // const { name, age, phone } = req.body;
-  // if (!name || !age || !phone) {
-  //   res.status(400);
-  //   throw new Error("All Fields Are manditory");
-  // }
-  // res.status(200).json({ message: "create a products" });
-
   const { name, age } = req.body;
 
   try {

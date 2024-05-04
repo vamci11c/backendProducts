@@ -1,4 +1,4 @@
-const BlogModel = require('../Model/blog');
+const BlogModel = require("../Model/blog");
 
 const asyncHandler = require("express-async-handler");
 
@@ -7,17 +7,17 @@ const asyncHandler = require("express-async-handler");
 //@access public
 async function createProduct(req, res) {
   console.log("create product body", req.body);
-  const { name, age } = req.body;
+  const { title, status, content } = req.body;
 
   try {
-    const blogData = new BlogModel({ name, age });
+    const blogData = new BlogModel({ title, status, content });
     await blogData.save();
     res.send(blogData);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
-};
+}
 
 //@desc get all products
 //@route GET /api/products
@@ -25,15 +25,13 @@ async function createProduct(req, res) {
 async function getProducts(req, res) {
   try {
     const users = await BlogModel.find({});
-    console.log('users', users)
+    console.log("users", users);
     res.send(users);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
-};
-
-
+}
 
 //@desc Get individual  products
 //@route GET /api/products/id

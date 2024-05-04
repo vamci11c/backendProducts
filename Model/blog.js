@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const bogSchema = new mongoose.Schema({
-    name: String,
-    age: Number
+  title: String,
+  status: String,
+  content: String,
 });
 
-const BlogModel = mongoose.model('ridge', bogSchema);
+const BlogModel = mongoose.model("ridgeBlog", bogSchema);
 
 module.exports = BlogModel;

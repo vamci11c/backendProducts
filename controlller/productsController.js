@@ -1,16 +1,15 @@
 const BlogModel = require("../Model/blog");
-
 const asyncHandler = require("express-async-handler");
+const { v4: uuidv4 } = require("uuid");
 
 //@desc Create  products
 //@route post /api/products
 //@access public
 async function createProduct(req, res) {
-  console.log("create product body", req.body);
   const { title, status, content } = req.body;
-
+  const blogId = uuidv4();
   try {
-    const blogData = new BlogModel({ title, status, content });
+    const blogData = new BlogModel({ blogId, title, status, content });
     await blogData.save();
     res.send(blogData);
   } catch (error) {
@@ -24,9 +23,8 @@ async function createProduct(req, res) {
 //@access public
 async function getProducts(req, res) {
   try {
-    const users = await BlogModel.find({});
-    console.log("users", users);
-    res.send(users);
+    const blogs = await BlogModel.find({});
+    res.send(blogs);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
@@ -36,23 +34,46 @@ async function getProducts(req, res) {
 //@desc Get individual  products
 //@route GET /api/products/id
 //@access public
-const getProduct = asyncHandler((req, res) => {
-  res.status(200).json({ message: `get product ${req.params.id}` });
-});
+async function getProduct(req, res) {
+  try {
+    const blogsById = await BlogModel.find({ blogId: req.params.id });
+    res.send(blogsById);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+}
 
 //@desc Edit individual  products
 //@route PUT /api/products/id
 //@access public
-const updateProduct = asyncHandler((req, res) => {
-  res.status(200).json({ message: `update product ${req.params.id}` });
-});
+async function updateProduct(req, res) {
+  console.log("req", req.params.id, req.body);
+  try {
+    const updateBlog = await BlogModel.updateOne(
+      { blogId: req.params.id },
+      req.body
+    );
+    res.send(updateBlog);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+}
 
 //@desc Delete individual  products
 //@route DELETE /api/products/id
 //@access public
-const deleteProduct = asyncHandler((req, res) => {
-  res.status(200).json({ message: `delete product ${req.params.id}` });
-});
+async function deleteProduct(req, res) {
+  // res.status(200).json({ message: `delete product ${req.params.id}` });
+  try {
+    const deleteBlog = await BlogModel.deleteOne({ blogId: req.params.id });
+    res.send(deleteBlog);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+}
 
 module.exports = {
   getProducts,

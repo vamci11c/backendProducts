@@ -6,10 +6,14 @@ const app = express();
 const db = require('./db');
 // const url = 'mongodb://localhost:27017/blogsDB'
 const port = process.env.port || 5000;
-const cors = require('express-cors')
+const cors = require('express-cors');
+const bodyParser = require("body-parser");
 
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }))
 app.use(cors())
+app.use(express.urlencoded({ limit: '10mb' }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use("/api/products", require("./routes/productsRoute"));
 
 app.use("/api/user", require("./routes/userRoute"));

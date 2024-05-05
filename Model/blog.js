@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 const bogSchema = new mongoose.Schema({
-  blogId:String,
+  blogId: String,
   title: String,
+  banner: String,
   status: String,
   content: String,
 });

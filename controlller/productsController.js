@@ -6,10 +6,10 @@ const { v4: uuidv4 } = require("uuid");
 //@route post /api/products
 //@access public
 async function createProduct(req, res) {
-  const { title, status, content } = req.body;
+  const { title, banner, status, content } = req.body;
   const blogId = uuidv4();
   try {
-    const blogData = new BlogModel({ blogId, title, status, content });
+    const blogData = new BlogModel({ blogId, title, banner, status, content });
     await blogData.save();
     res.send(blogData);
   } catch (error) {
@@ -48,7 +48,6 @@ async function getProduct(req, res) {
 //@route PUT /api/products/id
 //@access public
 async function updateProduct(req, res) {
-  console.log("req", req.params.id, req.body);
   try {
     const updateBlog = await BlogModel.updateOne(
       { blogId: req.params.id },
@@ -65,7 +64,6 @@ async function updateProduct(req, res) {
 //@route DELETE /api/products/id
 //@access public
 async function deleteProduct(req, res) {
-  // res.status(200).json({ message: `delete product ${req.params.id}` });
   try {
     const deleteBlog = await BlogModel.deleteOne({ blogId: req.params.id });
     res.send(deleteBlog);

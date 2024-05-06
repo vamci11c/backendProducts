@@ -1,6 +1,8 @@
 const BlogModel = require("../Model/blog");
 const asyncHandler = require("express-async-handler");
 const { v4: uuidv4 } = require("uuid");
+const blogQueries = require("../queries/blogsQueries");
+const connection = require("../mySqlDb");
 
 //@desc Create  products
 //@route post /api/products
@@ -23,8 +25,16 @@ async function createProduct(req, res) {
 //@access public
 async function getProducts(req, res) {
   try {
-    const blogs = await BlogModel.find({});
-    res.send(blogs);
+    connection.query(blogQueries.selectBlogsQuery, (error, results) => {
+      if (error) {
+        console.error("Error retrieving user details:", error);
+        res
+          .status(500)
+          .send("An error occurred while retrieving user details.");
+      } else {
+        res.json(results);
+      }
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send(error);

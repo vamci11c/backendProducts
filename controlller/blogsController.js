@@ -7,13 +7,27 @@ const connection = require("../mySqlDb");
 //@desc Create  products
 //@route post /api/products
 //@access public
+
 async function createProduct(req, res) {
-  const { title, banner, status, content } = req.body;
+  const { title, bannerImage, description, content } = req.body;
   const blogId = uuidv4();
+
   try {
-    const blogData = new BlogModel({ blogId, title, banner, status, content });
-    await blogData.save();
-    res.send(blogData);
+    // Execute the INSERT query with the provided data
+    connection.query(
+      blogQueries.insertBlogsQuery,
+      [blogId, title, bannerImage, description, content],
+      (error, results) => {
+        if (error) {
+          console.error('Error inserting blog:', error);
+          res.status(500).send('An error occurred while creating the blog.');
+        } else {
+          // If insertion was successful, send back the inserted blog data
+          const insertedBlog = { blogId, title, bannerImage, description, content };
+          res.json(insertedBlog);
+        }
+      }
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
@@ -44,10 +58,22 @@ async function getProducts(req, res) {
 //@desc Get individual  products
 //@route GET /api/products/id
 //@access public
+
 async function getProduct(req, res) {
+  const blogId = req.params.id;
   try {
-    const blogsById = await BlogModel.find({ blogId: req.params.id });
-    res.send(blogsById);
+    connection.query(
+      blogQueries.selectSingleBlogQuery,
+      [blogId],
+      (error, results) => {
+        if (error) {
+          console.error('Error retrieving blog:', error);
+          res.status(500).send('An error occurred while retrieving the blog.');
+        } else {
+          res.json(results);
+        }
+      }
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
@@ -58,25 +84,48 @@ async function getProduct(req, res) {
 //@route PUT /api/products/id
 //@access public
 async function updateProduct(req, res) {
+  const { title, bannerImage, description, content } = req.body;
+  const blogId = req.params.id;
+
   try {
-    const updateBlog = await BlogModel.updateOne(
-      { blogId: req.params.id },
-      req.body
+    connection.query(
+      blogQueries.updateBlogsQuery,
+      [title, bannerImage, description, content, blogId],
+      (error, results) => {
+        if (error) {
+          console.error('Error updating blog:', error);
+          res.status(500).send('An error occurred while updating the blog.');
+        } else {
+          res.send(results);
+        }
+      }
     );
-    res.send(updateBlog);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
 }
 
+
 //@desc Delete individual  products
 //@route DELETE /api/products/id
 //@access public
 async function deleteProduct(req, res) {
+  const blogId = req.params.id;
+
   try {
-    const deleteBlog = await BlogModel.deleteOne({ blogId: req.params.id });
-    res.send(deleteBlog);
+    connection.query(
+      blogQueries.deleteBlogQuery,
+      [blogId],
+      (error, results) => {
+        if (error) {
+          console.error('Error deleting blog:', error);
+          res.status(500).send('An error occurred while deleting the blog.');
+        } else {
+          res.send(results);
+        }
+      }
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send(error);

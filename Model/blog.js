@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const bogSchema = new mongoose.Schema({
   blogId: String,
   title: String,
-  banner: String,
-  status: String,
+  bannerImage: String,
+  description: String,
   content: String,
 });
 

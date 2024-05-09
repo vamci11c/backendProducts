@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const errorHandler = require("./middleWare/errorHandler");
 const dotenv = require("dotenv").config();
 const app = express();
-const db = require('./db');
 const mySql = require('./mySqlDb');
 // const url = 'mongodb://localhost:27017/blogsDB'
 const port = process.env.port || 5000;

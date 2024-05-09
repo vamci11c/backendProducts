@@ -1,4 +1,3 @@
-const BlogModel = require("../Model/blog");
 const asyncHandler = require("express-async-handler");
 const { v4: uuidv4 } = require("uuid");
 const blogQueries = require("../queries/blogsQueries");

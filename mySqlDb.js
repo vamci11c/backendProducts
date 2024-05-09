@@ -1,13 +1,13 @@
 const mysql = require("mysql2");
-
+const dotenv = require("dotenv").config();
 // const connectionString = "mysql://root:admin@localhost:3306/blogsdata";
 // Create a connection to the MySQL database
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: process.env.HOST,
   port: 3306, // specify the port separately
-  user: "root",
-  password: "admin",
-  database: "blogsdata",
+  user: process.env.USER_NAME,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
   insecureAuth: true,
 });
 

@@ -8,7 +8,7 @@ const connection = require("../mySqlDb");
 //@access public
 
 async function createProduct(req, res) {
-  const { title, bannerImage, description, content } = req.body;
+  const { categoryId, title, bannerImage, description, content } = req.body;
   const blogId = uuidv4();
 
   try {
@@ -136,10 +136,36 @@ async function deleteProduct(req, res) {
   }
 }
 
+//@desc Get blogs by category Id
+//@route GET /api/blogs/categoryblogs/:id
+//@access public
+
+async function getblogsByCategory(req, res) {
+  const categoryId = req.params.id;
+  try {
+    connection.query(
+      blogQueries.selectBlogsByCategoryIdQuery,
+      [categoryId],
+      (error, results) => {
+        if (error) {
+          console.error("Error retrieving blog:", error);
+          res.status(500).send("An error occurred while retrieving the blog.");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+}
+
 module.exports = {
   getProducts,
   createProduct,
   getProduct,
   updateProduct,
   deleteProduct,
+  getblogsByCategory,
 };

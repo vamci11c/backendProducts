@@ -9,13 +9,13 @@ const connection = require("../mySqlDb");
 
 async function createCategory(req, res) {
   const { category } = req.body;
-  const blogId = uuidv4();
+  const categoryId = uuidv4();
 
   try {
     // Execute the INSERT query with the provided data
     connection.query(
       categoryQueries.insertCategoryQuery,
-      [category],
+      [categoryId, category],
       (error, results) => {
         if (error) {
           console.error("Error inserting Category:", error);

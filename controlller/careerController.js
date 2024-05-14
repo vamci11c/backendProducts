@@ -7,14 +7,14 @@ const connection = require("../mySqlDb");
 //@access public
 
 async function createCareer(req, res) {
-  const { cardImage, jobTitle, location, JobDescription } = req.body;
+  const { cardImage, jobTitle, location, jobDescription } = req.body;
   const careerId = uuidv4();
 
   try {
     // Execute the INSERT query with the provided data
     connection.query(
       careerQueries.insertCareerQuery,
-      [careerId, cardImage, jobTitle, location, JobDescription],
+      [careerId, cardImage, jobTitle, location, jobDescription],
       (error, results) => {
         if (error) {
           console.error("Error inserting Career:", error);
@@ -26,7 +26,7 @@ async function createCareer(req, res) {
             cardImage,
             jobTitle,
             location,
-            JobDescription,
+            jobDescription,
           };
           res.json(insertedCareer);
         }

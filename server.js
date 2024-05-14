@@ -15,6 +15,7 @@ app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 app.use("/api/blogs", require("./routes/blogsRoute"));
 app.use("/api/categories", require("./routes/categoryRoute"));
+app.use("/api/careers", require("./routes/careerRoute"));
 app.use(errorHandler);
 app.listen(port, () => {
   console.log(`I am in exprees server on port ${port}`);

@@ -1,4 +1,3 @@
-const asyncHandler = require("express-async-handler");
 const { v4: uuidv4 } = require("uuid");
 const categoryQueries = require("../queries/categoryQueries");
 const connection = require("../mySqlDb");
@@ -71,7 +70,7 @@ async function getCategoryById(req, res) {
   try {
     connection.query(
       categoryQueries.selectSingleCategoryQuery,
-      [blogId],
+      [categoryId],
       (error, results) => {
         if (error) {
           console.error("Error retrieving Category:", error);

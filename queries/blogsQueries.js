@@ -5,7 +5,7 @@ const selectSingleBlogQuery = "SELECT * FROM blogData where blogId=?";
 const insertBlogsQuery =
   "INSERT INTO blogData (blogId,title,bannerImage,description,content)VALUES(?,?,?,?,?)";
 const updateBlogsQuery =
-  "UPDATE blogdata SET title = ?, bannerImage = ?,description=?,content=?  WHERE blogId = ?";
+  "UPDATE blogData SET categoriId=?, title = ?, bannerImage = ?,description=?,content=?  WHERE blogId = ?";
 const deleteBlogQuery = "DELETE FROM blogData WHERE blogId = ?";
 
 module.exports = {

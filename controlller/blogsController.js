@@ -15,14 +15,20 @@ async function createProduct(req, res) {
     // Execute the INSERT query with the provided data
     connection.query(
       blogQueries.insertBlogsQuery,
-      [blogId, title, bannerImage, description, content],
+      [blogId, categoryId, title, bannerImage, description, content],
       (error, results) => {
         if (error) {
-          console.error('Error inserting blog:', error);
-          res.status(500).send('An error occurred while creating the blog.');
+          console.error("Error inserting blog:", error);
+          res.status(500).send("An error occurred while creating the blog.");
         } else {
           // If insertion was successful, send back the inserted blog data
-          const insertedBlog = { blogId, title, bannerImage, description, content };
+          const insertedBlog = {
+            blogId,
+            title,
+            bannerImage,
+            description,
+            content,
+          };
           res.json(insertedBlog);
         }
       }
@@ -66,8 +72,8 @@ async function getProduct(req, res) {
       [blogId],
       (error, results) => {
         if (error) {
-          console.error('Error retrieving blog:', error);
-          res.status(500).send('An error occurred while retrieving the blog.');
+          console.error("Error retrieving blog:", error);
+          res.status(500).send("An error occurred while retrieving the blog.");
         } else {
           res.json(results);
         }
@@ -83,17 +89,17 @@ async function getProduct(req, res) {
 //@route PUT /api/products/id
 //@access public
 async function updateProduct(req, res) {
-  const { title, bannerImage, description, content } = req.body;
+  const { categoryId, title, bannerImage, description, content } = req.body;
   const blogId = req.params.id;
 
   try {
     connection.query(
       blogQueries.updateBlogsQuery,
-      [title, bannerImage, description, content, blogId],
+      [categoryId, title, bannerImage, description, content, blogId],
       (error, results) => {
         if (error) {
-          console.error('Error updating blog:', error);
-          res.status(500).send('An error occurred while updating the blog.');
+          console.error("Error updating blog:", error);
+          res.status(500).send("An error occurred while updating the blog.");
         } else {
           res.send(results);
         }
@@ -104,7 +110,6 @@ async function updateProduct(req, res) {
     res.status(500).send(error);
   }
 }
-
 
 //@desc Delete individual  products
 //@route DELETE /api/products/id
@@ -118,8 +123,8 @@ async function deleteProduct(req, res) {
       [blogId],
       (error, results) => {
         if (error) {
-          console.error('Error deleting blog:', error);
-          res.status(500).send('An error occurred while deleting the blog.');
+          console.error("Error deleting blog:", error);
+          res.status(500).send("An error occurred while deleting the blog.");
         } else {
           res.send(results);
         }

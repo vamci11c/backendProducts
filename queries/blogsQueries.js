@@ -1,7 +1,7 @@
 // models/postModel.js
 
 const selectBlogsQuery =
-  "SELECT blogdata.blogID,blogdata.categoryId,blogdata.title,blogdata.bannerImage,blogdata.description,blogdata.content,categories.category FROM blogdata JOIN categories ON blogdata.categoryId = categories.categoryId;";
+  "SELECT blogdata.blogID,blogdata.categoryId,blogdata.title,blogdata.bannerImage,blogdata.description,blogdata.content,categories.category FROM blogdata JOIN categories ON blogdata.categoryId = categories.categoryId";
 const selectBlogsByCategoryIdQuery =
   "SELECT blogdata.blogID,blogdata.categoryId,blogdata.title,blogdata.bannerImage,blogdata.description,blogdata.content,categories.category   FROM blogdata  JOIN categories ON blogdata.categoryId = categories.categoryId where blogdata.categoryId=?";
 const selectSingleBlogQuery = "SELECT * FROM blogData where blogId=?";

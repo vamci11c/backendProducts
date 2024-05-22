@@ -75,6 +75,10 @@ async function getProduct(req, res) {
           console.error("Error retrieving blog:", error);
           res.status(500).send("An error occurred while retrieving the blog.");
         } else {
+          const categoryData = {
+            categoryId: results[0].categoryId,
+          };
+          results[0].category=categoryData
           res.json(results);
         }
       }

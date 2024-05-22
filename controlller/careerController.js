@@ -93,7 +93,7 @@ async function updateCareer(req, res) {
 
   try {
     connection.query(
-      categoryQueries.updateCareerQuery,
+      careerQueries.updateCareerQuery,
       [cardImage, jobTitle, location, JobDescription, careerId],
       (error, results) => {
         if (error) {
@@ -118,7 +118,7 @@ async function deleteCareer(req, res) {
 
   try {
     connection.query(
-      categoryQueries.deleteCareerQuery,
+      careerQueries.deleteCareerQuery,
       [careerId],
       (error, results) => {
         if (error) {
